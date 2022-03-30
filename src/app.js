@@ -9,7 +9,7 @@ const session = require('koa-generic-session')
 const redisStore=require('koa-redis')
 const { REDIS_CONF } = require('./config/db')
 const { isProd } = require('./utils/env')
-
+const {SESSION_SECRET_KEY}=require('./config/secretKey')
 //路由
 const index = require('./routes/index')
 const userViewRouter=require('./routes/view/user')
@@ -38,7 +38,7 @@ app.use(views(__dirname + '/views', {
 }))
 
 //session配置
-app.keys = ['dn9UOJD9*92_)(1D']
+app.keys = [SESSION_SECRET_KEY]
 app.use(session({
   key: 'weibo.sid',
   prefix: 'weibo:sess',
