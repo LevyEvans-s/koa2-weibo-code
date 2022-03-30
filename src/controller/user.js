@@ -10,7 +10,8 @@ const {SuccessModel, ErrorModel}=require('../Model/ResModel')
 const {
     registerUserNameNotExistInfo,
     registerUserNameExistInfo,
-    registerFailInfo
+    registerFailInfo,
+    loginFailInfo
 } = require('../Model/ErrorInfo')
 const doCrypto=require('../utils/cryp')
 
@@ -30,7 +31,7 @@ async function register({ userName, password, gender }) {
     const userInfo = await getUserInfo(userName)
     if (userInfo) {
         //用户名已存在
-        return ErrnoModel(registerUserNameExistInfo)
+        return ErrorModel(registerUserNameExistInfo)
     }
     try {
         await createUser({
@@ -45,7 +46,21 @@ async function register({ userName, password, gender }) {
     }
 }
 
+//登录
+async function login(ctx,userName,password) {
+    const userInfo=await getUserInfo(userName,doCrypto(password))
+    if (!userInfo) {
+        return new ErrorModel(loginFailInfo)
+    }
+    //登录成功
+    if (ctx.session.userInfo == null) {
+        ctx.session.userInfo=userInfo
+    }
+    return new SuccessModel()
+}
+
 module.exports = {
     isExist,
-    register
+    register,
+    login
 }
