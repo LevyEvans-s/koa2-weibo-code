@@ -5,7 +5,6 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-// const jwtKoa=require('koa-jwt')
 const session = require('koa-generic-session')
 const redisStore=require('koa-redis')
 const { REDIS_CONF } = require('./config/db')
@@ -13,10 +12,9 @@ const { isProd } = require('./utils/env')
 
 //路由
 const index = require('./routes/index')
-const users = require('./routes/users')
-const errorViewRouter = require('./routes/views/error')
-
-const {SECRET}=require('./config/constants')
+const userViewRouter=require('./routes/view/user')
+const userAPIRouter=require('./routes/api/user')
+const errorViewRouter = require('./routes/view/error')
 
 // error handler
 const onerrorConf = {}
@@ -26,12 +24,6 @@ if (isProd) {
   }
 }
 onerror(app,onerrorConf)
-
-// app.use(jwtKoa({
-//   secret:SECRET
-// }).unless({
-//   path:[/^\/users\/login/]//自定义哪些目录忽略jwt
-// }))
 
 // middlewares
 app.use(bodyparser({
@@ -62,7 +54,8 @@ app.use(session({
 
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+app.use(userViewRouter.routes(),userViewRouter.allowedMethods())
+app.use(userAPIRouter.routes(),userAPIRouter.allowedMethods())
 app.use(errorViewRouter.routes(),errorViewRouter.allowedMethods()) //404路由注册到最下面
 
 // error-handling
