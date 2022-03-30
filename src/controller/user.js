@@ -6,7 +6,7 @@ const {
     getUserInfo,
     createUser
 } = require('../services/user')
-const {SuccessModel, ErrnoModel}=require('../Model/ResModel')
+const {SuccessModel, ErrorModel}=require('../Model/ResModel')
 const {
     registerUserNameNotExistInfo,
     registerUserNameExistInfo,
@@ -21,7 +21,7 @@ async function isExist(userName) {
     if (userInfo) {
         return new SuccessModel(userInfo)
     } else {
-        return new ErrnoModel(registerUserNameNotExistInfo)
+        return new ErrorModel(registerUserNameNotExistInfo)
     }
 }
 
@@ -41,7 +41,7 @@ async function register({ userName, password, gender }) {
         return new SuccessModel()
     } catch (e) {
         console.error(e.message,e.stack)//日志
-        return new ErrnoModel(registerFailInfo)
+        return new ErrorModel(registerFailInfo)
     }
 }
 

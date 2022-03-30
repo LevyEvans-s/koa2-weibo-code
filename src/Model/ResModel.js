@@ -29,7 +29,7 @@ class SuccessModel extends BaseModel{
 /**
  * 失败的数据模型
  */
-class ErrnoModel extends BaseModel{
+class ErrorModel extends BaseModel{
     constructor({ errno, message }) {
         super({
             errno,
@@ -40,5 +40,5 @@ class ErrnoModel extends BaseModel{
 
 module.exports = {
     SuccessModel,
-    ErrnoModel
+    ErrorModel
 }
