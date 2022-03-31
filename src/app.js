@@ -14,6 +14,7 @@ const { isProd } = require('./utils/env')
 const {SESSION_SECRET_KEY}=require('./config/secretKey')
 
 //路由
+const profileAPIRouter=require('./routes/api/blog-profile')
 const blogHomeAPIRouter=require('./routes/api/blog-home')
 const blogViewRouter=require('./routes/view/blog')
 const utilsAPIRouter=require('./routes/api/utils')
@@ -51,7 +52,7 @@ app.use(session({
   cookie: {
     path: '/',
     httpOnly: true,
-    maxAge:24*60*60*1000
+    maxAge:24*60*60*1000 //一天
   },
   store: redisStore({
     all:`${REDIS_CONF.host}:${REDIS_CONF.port}`
@@ -59,6 +60,7 @@ app.use(session({
 }))
 
 // routes
+app.use(profileAPIRouter.routes(),profileAPIRouter.allowedMethods())
 app.use(blogHomeAPIRouter.routes(),blogHomeAPIRouter.allowedMethods())
 app.use(blogViewRouter.routes(),blogViewRouter.allowedMethods())
 app.use(utilsAPIRouter.routes(),userAPIRouter.allowedMethods())
