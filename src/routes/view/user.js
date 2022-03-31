@@ -24,11 +24,12 @@ router.get('/login', async (ctx, next) => {
 })
 
 router.get('/register', async (ctx, next) => {
-    await ctx.render('register', {})
+    await ctx.render('register', ctx.session.userInfo)
 })
 
 router.get('/setting', loginRedirect,async (ctx, next) => {
-    await ctx.render('setting',{ctx.session.userInfo})
+    //此方法在给模板赋值时，必须一次性将模板里的所有变量都传值，否则会报错。
+    await ctx.render('setting',ctx.session.userInfo)
 })
 
 module.exports=router
