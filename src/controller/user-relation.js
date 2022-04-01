@@ -2,7 +2,7 @@
  * @description 用户关系
  */
 
-const { getUserByFollower,addFollower,deleteFollower } = require('../services/user-relation')
+const { getUserByFollower,addFollower,deleteFollower,getFollowersByUser } = require('../services/user-relation')
 const {SuccessModel,ErrorModel}=require('../Model/ResModel')
 
 //根据userId获取粉丝列表
@@ -11,6 +11,19 @@ async function getFans(userId) {
     return new SuccessModel({
         count,
         fansList:userList
+    })
+}
+
+/**
+ * 获取关注人列表
+ * @param {number} userId userId
+ */
+ async function getFollowers(userId) {
+    const { count, userList } = await getFollowersByUser(userId)
+
+    return new SuccessModel({
+        count,
+        followersList: userList
     })
 }
 
@@ -45,5 +58,6 @@ async function getFans(userId) {
 module.exports = {
     getFans,
     follow,
-    unFollow
+    unFollow,
+    getFollowers
 }
