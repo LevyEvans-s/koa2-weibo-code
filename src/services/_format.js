@@ -21,7 +21,7 @@ function formatUser(list) {
         return list
     }
     if (list instanceof Array) {
-        return list.map(_formatUserPicture(obj))
+        return list.map(_formatUserPicture)
     }
 
     //单个对象
