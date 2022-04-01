@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const { loginCheck } = require('../../middlewares/loginChecks')
+const { loginCheck } = require('../../middleware/loginCheck')
 const { getSquareBlogList } = require('../../controller/blog-square')
 const { getBlogListStr } = require('../../utils/blog')
 
