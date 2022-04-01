@@ -30,7 +30,6 @@
          }
      })
      return result.count
-     // result.rows
  }
  
  /**
@@ -106,6 +105,7 @@
      return result[0] > 0
  }
  
+
  module.exports = {
      createAtRelation,
      getAtRelationCount,
