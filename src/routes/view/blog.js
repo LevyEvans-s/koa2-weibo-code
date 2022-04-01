@@ -54,7 +54,7 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
     const {count:fansCount,fansList}=fansResult.data
 
     //获取关注人列表
-    const followersResult = await getFollowers(userId)
+    const followersResult = await getFollowers(curUserInfo.id)
     const { count: followersCount, followersList } = followersResult.data
 
     //我是否关注了此人
@@ -69,7 +69,7 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
         userData: {
             userInfo: curUserInfo,
             isMe,
-            fanData: {
+            fansData: {
                 count: fansCount,
                 list:fansList
             },
