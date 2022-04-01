@@ -7,10 +7,9 @@ const { create, getHomeBlogList } = require('../../controller/blog-home')
 const {loginCheck}=require('../../middleware/loginCheck')
 const { genValidator } = require('../../middleware/validator')
 const blogValidate = require('../../validator/blog')
-const { getHomeBlogList } = require('../../controller/blog-home')
 const { getBlogListStr } = require('../../utils/blog')
 
-router.prefix('/api/router')
+router.prefix('/api/blog')
 
 //创建微博
 router.post('/create', loginCheck,genValidator(blogValidate), async (ctx, next) => {
