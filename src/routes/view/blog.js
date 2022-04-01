@@ -8,7 +8,14 @@ const {getSquareBlogList}=require('../../controller/blog-square')
 
 //首页
 router.get('/', loginRedirect, async (ctx, next) => {
-    await ctx.render('index', {})
+    const userInfo = ctx.session.userInfo
+    const { id: userId } = userInfo
+
+    await ctx.render('index', {
+        userData: {
+            userInfo
+        },
+    })
 })
 
 //个人主页
